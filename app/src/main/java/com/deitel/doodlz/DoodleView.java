@@ -58,12 +58,41 @@ public class DoodleView extends View {
       bitmapCanvas = new Canvas(bitmap);
       bitmap.eraseColor(Color.WHITE); // erase the Bitmap with white
    }
-   public void loadBackground()
-   {
-      Resources res = getResources();
-      Bitmap bitmap = BitmapFactory.decodeResource(res, R.drawable.goku);
-      bitmapCanvas.drawBitmap(bitmap, 0, 0, paintScreen);
+   public void loadBackground( int selection)
+   { switch(selection) {
 
+      case 1:
+        Resources res1 = getResources();
+        Bitmap bitmap1 = BitmapFactory.decodeResource(res1, R.drawable.goku);
+        bitmapCanvas.drawBitmap(bitmap1, 0, 0, paintScreen);
+      break;
+      case 2:
+         Resources res2 = getResources();
+         Bitmap bitmap2 = BitmapFactory.decodeResource(res2, R.drawable.goku);
+         bitmapCanvas.drawBitmap(bitmap2, 0, 0, paintScreen);
+      break;
+      case 3:
+         Resources res3 = getResources();
+         Bitmap bitmap3 = BitmapFactory.decodeResource(res3, R.drawable.goku);
+         bitmapCanvas.drawBitmap(bitmap3, 0, 0, paintScreen);
+         break;
+      case 4:
+         Resources res4 = getResources();
+         Bitmap bitmap4 = BitmapFactory.decodeResource(res4, R.drawable.goku);
+         bitmapCanvas.drawBitmap(bitmap4, 0, 0, paintScreen);
+         break;
+      case 5:
+         Resources res5 = getResources();
+         Bitmap bitmap5 = BitmapFactory.decodeResource(res5, R.drawable.goku);
+         bitmapCanvas.drawBitmap(bitmap5, 0, 0, paintScreen);
+         break;
+      case 6:
+         Resources res6 = getResources();
+         Bitmap bitmap6 = BitmapFactory.decodeResource(res6, R.drawable.goku);
+         bitmapCanvas.drawBitmap(bitmap6, 0, 0, paintScreen);
+         break;
+
+   }
    }
 
    // clear the painting

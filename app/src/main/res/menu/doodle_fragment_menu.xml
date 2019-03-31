@@ -2,18 +2,46 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
    <item
-      android:id="@+id/color"
-      android:title="@string/menuitem_color"
-      android:icon="@drawable/ic_palette_24dp"
-      app:showAsAction="ifRoom">
+       android:id="@+id/color"
+       android:icon="@drawable/ic_palette_24dp"
+       android:title="@string/menuitem_color"
+       app:showAsAction="never|ifRoom">
+
    </item>
 
    <item
       android:id= "@+id/load_bg"
        android:title="Load Background"
        android:icon="@drawable/ic_insert_photo_black_24dp"
-       app:showAsAction="ifRoom"
-      ></item>
+       app:showAsAction="always"
+      >
+
+       <menu>
+           <item
+               android:id="@+id/img1"
+               android:title="Image 1 " />
+           <item
+               android:id="@+id/img2"
+               android:title="Image 2" />
+           <item
+               android:id="@+id/img3"
+               android:title="Image 3" />
+           <item
+               android:id="@+id/img4"
+               android:title="Image 4" />
+           <item
+               android:id="@+id/img5"
+               android:title="Image 5" />
+           <item
+               android:id="@+id/img6"
+               android:title="Image 6" />
+       </menu>
+
+
+
+
+
+   </item>
 
    <item
       android:id="@+id/line_width"
@@ -43,9 +71,8 @@
    </item>
 
    <item
-      android:id="@+id/print"
-      android:title="@string/menuitem_print"
-      android:icon="@drawable/ic_print_24dp"
-      app:showAsAction="ifRoom">
-   </item>
+       android:id="@+id/print"
+       android:icon="@drawable/ic_print_24dp"
+       android:title="@string/menuitem_print"
+       app:showAsAction="ifRoom"></item>
 </menu>

@@ -167,9 +167,25 @@ public class MainActivityFragment extends Fragment {
             BgColorDialogFragment bgColorDialogFragment = new BgColorDialogFragment();
             bgColorDialogFragment.show(getFragmentManager(), "Background Color");
             return true;
-         case R.id.load_bg:
-            doodleView.loadBackground();
+         case R.id.img1:
+            doodleView.loadBackground(1);
             return true;
+         case R.id.img2:
+            doodleView.loadBackground(2);
+            return true;
+         case R.id.img3:
+            doodleView.loadBackground(3);
+            return true;
+         case R.id.img4:
+            doodleView.loadBackground(4);
+            return true;
+            case R.id.img5:
+               doodleView.loadBackground(5);
+            return true;
+         case R.id.img6:
+            doodleView.loadBackground(6);
+            return true;
+
       }
 
       return super.onOptionsItemSelected(item);
