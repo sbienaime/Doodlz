@@ -19,22 +19,22 @@
        <menu>
            <item
                android:id="@+id/img1"
-               android:title="Image 1 " />
+               android:title="African Portrait" />
            <item
                android:id="@+id/img2"
-               android:title="Image 2" />
+               android:title="Banksy" />
            <item
                android:id="@+id/img3"
-               android:title="Image 3" />
+               android:title="Fashion Accessories" />
            <item
                android:id="@+id/img4"
-               android:title="Image 4" />
+               android:title="African Art" />
            <item
                android:id="@+id/img5"
-               android:title="Image 5" />
+               android:title="Fall Leaves" />
            <item
                android:id="@+id/img6"
-               android:title="Image 6" />
+               android:title="Rainbow Parrot" />
        </menu>
 
 
