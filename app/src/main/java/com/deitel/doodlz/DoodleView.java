@@ -142,7 +142,7 @@ public class DoodleView extends View {
      //else if (width > 0.023529414 & width <= 0.027450982)
       //{width = 30;}
 
-      else if (width >0.027450982& width <= 0.04705883)
+      else if (width >0.027450982)
       {width = 200;}
 
      // else if (width >0.03137255 & width <= 0.03529412)
@@ -151,10 +151,9 @@ public class DoodleView extends View {
     //   else if (width >0.03529412 & width < 0.04705883)
     //  {width = 40;}
 
-      else if (width > 0.04705883)
-      {width = 100;}
 
-      Log.i("WidthValue",width+"");
+
+      Log.i("WidthValue",width+"");// For Debugging , checking variable value 
 
       paintLine.setStrokeWidth(width);
    }
