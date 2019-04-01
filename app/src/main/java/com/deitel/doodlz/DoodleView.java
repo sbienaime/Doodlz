@@ -14,6 +14,7 @@ import android.graphics.Point;
 import android.provider.MediaStore;
 import android.support.v4.print.PrintHelper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,7 +47,9 @@ public class DoodleView extends View {
       paintLine.setAntiAlias(true); // smooth edges of drawn line
       paintLine.setColor(Color.BLACK); // default color is black
       paintLine.setStyle(Paint.Style.STROKE); // solid line
-      paintLine.setStrokeWidth(5); // set the default line width
+
+
+      //paintLine.setStrokeWidth(5); // set the default line width
       paintLine.setStrokeCap(Paint.Cap.ROUND); // rounded line ends
    }
 
@@ -119,13 +122,47 @@ public class DoodleView extends View {
    }
 
    // set the painted line's width
-   public void setLineWidth(int width) {
+   public void setLineWidth(float width) {
+      Log.i("WidthValueBefore",width+"");
+       if (width >0 & width <= 0.015686275)
+        {width = 10;}
+
+     //  else if (width >0.07843138 & width <=0.01176470 )
+       //  {width =22 ;}
+
+       //else if (width >0.01176470 & width <=  )
+             // {width = 24;}
+
+      else if (width > 0.015686275 & width <=  0.027450982)
+      {width = 80;}
+
+     // else if (width > 0.019607844& width <= 0.023529414)
+      //{width = 28;}
+
+     //else if (width > 0.023529414 & width <= 0.027450982)
+      //{width = 30;}
+
+      else if (width >0.027450982& width <= 0.04705883)
+      {width = 200;}
+
+     // else if (width >0.03137255 & width <= 0.03529412)
+      //{width = 34;}
+
+    //   else if (width >0.03529412 & width < 0.04705883)
+    //  {width = 40;}
+
+      else if (width > 0.04705883)
+      {width = 100;}
+
+      Log.i("WidthValue",width+"");
+
       paintLine.setStrokeWidth(width);
    }
 
    // return the painted line's width
    public int getLineWidth() {
       return (int) paintLine.getStrokeWidth();
+
    }
 
    // perform custom drawing when the DoodleView is refreshed on screen
@@ -137,6 +174,7 @@ public class DoodleView extends View {
 
       // for each path currently being drawn
       for (Integer key : pathMap.keySet())
+
          canvas.drawPath(pathMap.get(key), paintLine); // draw line
    }
 
@@ -151,12 +189,14 @@ public class DoodleView extends View {
          action == MotionEvent.ACTION_POINTER_DOWN) {
          touchStarted(event.getX(actionIndex), event.getY(actionIndex),
             event.getPointerId(actionIndex));
+
       }
       else if (action == MotionEvent.ACTION_UP ||
          action == MotionEvent.ACTION_POINTER_UP) {
          touchEnded(event.getPointerId(actionIndex));
       }
       else {
+
          touchMoved(event);
       }
 
@@ -191,13 +231,17 @@ public class DoodleView extends View {
    // called when the user drags along the screen
    private void touchMoved(MotionEvent event) {
       // for each of the pointers in the given MotionEvent
+      setLineWidth(event.getSize());
       for (int i = 0; i < event.getPointerCount(); i++) {
+
+         Log.i("PRESSURE", event.getSize()+"");
          // get the pointer ID and pointer index
          int pointerID = event.getPointerId(i);
          int pointerIndex = event.findPointerIndex(pointerID);
 
          // if there is a path associated with the pointer
          if (pathMap.containsKey(pointerID)) {
+
             // get the new coordinates for the pointer
             float newX = event.getX(pointerIndex);
             float newY = event.getY(pointerIndex);
@@ -213,6 +257,7 @@ public class DoodleView extends View {
 
             // if the distance is significant enough to matter
             if (deltaX >= TOUCH_TOLERANCE || deltaY >= TOUCH_TOLERANCE) {
+
                // move the path to the new location
                path.quadTo(point.x, point.y, (newX + point.x) / 2,
                   (newY + point.y) / 2);
@@ -220,6 +265,8 @@ public class DoodleView extends View {
                // store the new coordinates
                point.x = (int) newX;
                point.y = (int) newY;
+
+
             }
          }
       }
