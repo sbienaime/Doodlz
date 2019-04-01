@@ -189,6 +189,7 @@ public class DoodleView extends View {
          action == MotionEvent.ACTION_POINTER_DOWN) {
          touchStarted(event.getX(actionIndex), event.getY(actionIndex),
             event.getPointerId(actionIndex));
+         setLineWidth(event.getSize());
 
       }
       else if (action == MotionEvent.ACTION_UP ||
@@ -231,7 +232,7 @@ public class DoodleView extends View {
    // called when the user drags along the screen
    private void touchMoved(MotionEvent event) {
       // for each of the pointers in the given MotionEvent
-      setLineWidth(event.getSize());
+
       for (int i = 0; i < event.getPointerCount(); i++) {
 
          Log.i("PRESSURE", event.getSize()+"");
