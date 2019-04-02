@@ -185,6 +185,12 @@ public class MainActivityFragment extends Fragment {
          case R.id.img6:
             doodleView.loadBackground(6);
             return true;
+         case R.id.draw_oval:
+            DoodleView.oval_selected=true;
+            return true;
+         case R.id.draw_rectangle:
+            DoodleView.rectangle_selected=true;
+            return true;
 
       }
 
