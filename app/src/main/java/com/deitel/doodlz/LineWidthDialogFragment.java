@@ -42,14 +42,14 @@ public class LineWidthDialogFragment extends DialogFragment {
       final DoodleView doodleView = getDoodleFragment().getDoodleView();
       final SeekBar widthSeekBar = (SeekBar)
          lineWidthDialogView.findViewById(R.id.widthSeekBar);//#lastchanges
-     // widthSeekBar.setOnSeekBarChangeListener(lineWidthChanged);
-     // widthSeekBar.setProgress(doodleView.getLineWidth());
+      widthSeekBar.setOnSeekBarChangeListener(lineWidthChanged);
+      widthSeekBar.setProgress(doodleView.getLineWidth());
 
       // add Set Line Width Button
       builder.setPositiveButton(R.string.button_set_line_width,
          new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-               //doodleView.setLineWidth(widthSeekBar.getProgress());
+               doodleView.setShapeWidth(widthSeekBar.getProgress());
             }
          }
       );

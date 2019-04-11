@@ -12,12 +12,17 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RectShape;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.print.PrintHelper;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.Surface;
 import android.view.View;
 import android.widget.Toast;
 
@@ -31,7 +36,8 @@ public class DoodleView extends View {
 
    private Bitmap bitmap; // drawing area for displaying or saving
    private Canvas bitmapCanvas; // used to to draw on the bitmap
-   private final Paint paintScreen; // used to draw bitmap onto screen
+   private final Paint paintScreen;// used to draw bitmap onto screen
+   public static Paint paintShape;
    private final Paint paintLine; // used to draw lines onto bitmap
    public static boolean oval_selected;
    public static boolean rectangle_selected;
@@ -48,7 +54,14 @@ public class DoodleView extends View {
       paintScreen = new Paint(); // used to display bitmap onto screen
 
       // set the initial display settings for the painted line
-      paintLine = new Paint();
+      paintShape = new Paint();
+      paintShape.setAntiAlias(true);
+      paintShape.setColor(Color.BLACK);
+      paintShape.setStyle(Paint.Style.STROKE);
+      paintShape.setStrokeCap(Paint.Cap.ROUND);
+
+
+      paintLine=new Paint();
       paintLine.setAntiAlias(true); // smooth edges of drawn line
       paintLine.setColor(Color.BLACK); // default color is black
       paintLine.setStyle(Paint.Style.STROKE); // solid line
@@ -71,7 +84,7 @@ public class DoodleView extends View {
 
       case 1:
          Resources res1 = getResources();
-         Bitmap bitmap1 = BitmapFactory.decodeResource(res1, R.drawable.african_portrait);
+         Bitmap bitmap1 = BitmapFactory.decodeResource(res1, R.drawable.lotus);
          bitmapCanvas.drawBitmap(bitmap1, 0, 0, paintScreen);
          break;
       case 2:
@@ -119,11 +132,25 @@ public class DoodleView extends View {
    // set the painted line's color
    public void setDrawingColor(int color) {
       paintLine.setColor(color);
+      paintShape.setColor(color);
    }
 
    // return the painted line's color
    public int getDrawingColor() {
       return paintLine.getColor();
+
+   }
+
+   public void setShapeWidth(int width) {
+      paintShape.setStrokeWidth(width);
+
+
+   }
+
+
+   public int getShapeWidth() {
+      return (int) paintShape.getStrokeWidth();
+
    }
 
    // set the painted line's width
@@ -148,7 +175,7 @@ public class DoodleView extends View {
       //{width = 30;}
 
       else if (width >0.027450982)
-      {width = 200;}
+      {width =120 ;}
 
       // else if (width >0.03137255 & width <= 0.03529412)
       //{width = 34;}
@@ -161,6 +188,8 @@ public class DoodleView extends View {
       Log.i("WidthValue",width+"");// For Debugging , checking variable value
 
       paintLine.setStrokeWidth(width);
+
+
    }
 
    // return the painted line's width
@@ -182,13 +211,25 @@ public class DoodleView extends View {
          canvas.drawPath(pathMap.get(key), paintLine); // draw line
    }
 
+
+    public static  void setToFill(){
+
+      paintShape.setStyle(Paint.Style.FILL);
+
+   }
+
+
+   public static  void setToStroke(){
+
+      paintShape.setStyle(Paint.Style.STROKE);
+
+   }
    // handle touch event
    @Override
    public boolean onTouchEvent(MotionEvent event) {
       int action = event.getActionMasked(); // event type
       int actionIndex = event.getActionIndex(); // pointer (i.e., finger)
       if  (rectangle_selected){
-         setLineWidth(10);
 
        if (action == MotionEvent.ACTION_DOWN ||
                  action == MotionEvent.ACTION_POINTER_DOWN) {
@@ -210,12 +251,13 @@ public class DoodleView extends View {
                case 4:
                   rect.bottom = (int) event.getY(actionIndex);
                   rectangle_selected = false;
-
-
+                  break;
             }
             if (i == 4){
+               RectShape r = new RectShape();
 
-               bitmapCanvas.drawRect(rect.left, rect.top, rect.right, rect.bottom, paintLine);
+               bitmapCanvas.drawRect(rect.left, rect.top, rect.right, rect.bottom, paintShape);
+               setToStroke();
                i=0;
          }
             Log.i("BOOLEAN VALUE", rectangle_selected+"");
@@ -229,7 +271,6 @@ public class DoodleView extends View {
       if(oval_selected){
 
          regular_sketch=false;
-         setLineWidth(10);
 
          if (action == MotionEvent.ACTION_DOWN ||
                  action == MotionEvent.ACTION_POINTER_DOWN) {
@@ -244,20 +285,21 @@ public class DoodleView extends View {
                   rect.left = (int) event.getX(actionIndex);
                   break;
                case 2:
-                  rect.right = (int) event.getX(actionIndex);
+                  rect.top = (int) event.getY(actionIndex);
                   break;
                case 3:
-                  rect.top = (int) event.getY(actionIndex);
+                  rect.right =(int) event.getX(actionIndex);
                   break;
                case 4:
                   rect.bottom = (int) event.getY(actionIndex);
                   oval_selected = false;
-                  rectangle_selected=true ;
+
 
             }
             if (i == 4){
-
-               bitmapCanvas.drawOval(10, 50,50,20, paintLine);
+               OvalShape oval;
+               RectShape rect1;
+               bitmapCanvas.drawOval(rect.left, rect.top,rect.right,rect.bottom, paintShape);
                i=0;
             }
             Log.i("BOOLEAN VALUE", rectangle_selected+"");
@@ -266,23 +308,14 @@ public class DoodleView extends View {
          //setLineWidth(event.getSize());
 
 
-
-
-
-
-
-
-
-
-
          System.out.println("Testing");
-
-
       regular_sketch=false;}
       else {regular_sketch=true;}
 
 
       if (regular_sketch){
+
+
          // determine whether touch started, ended or is moving
          if (action == MotionEvent.ACTION_DOWN ||
                  action == MotionEvent.ACTION_POINTER_DOWN) {
@@ -300,6 +333,32 @@ public class DoodleView extends View {
       }
       invalidate(); // redraw
       return true;
+   }
+
+
+   private void RectangleSelected(int x , int y, int movementID  ){
+
+      Path path; // used to store the path for the given touch id
+      Point point; // used to store the last point in path
+
+      // if there is already a path for MovementID
+      if (pathMap.containsKey(movementID)) {
+         path = pathMap.get(movementID); // get the Path
+         path.reset(); // resets the Path because a new touch has started
+         point = previousPointMap.get(movementID); // get Path's last point
+      }
+      else {
+         path = new Path();
+         pathMap.put(movementID, path); // add the Path to Map
+         point = new Point(); // create a new Point
+         previousPointMap.put(movementID, point); // add the Point to the Map
+      }
+
+      // move to the coordinates of the touch
+      path.moveTo(x, y);
+      point.x = (int) x;
+      point.y = (int) y;
+
    }
 
    // called when the user touches the screen
@@ -324,6 +383,65 @@ public class DoodleView extends View {
       path.moveTo(x, y);
       point.x = (int) x;
       point.y = (int) y;
+   }
+
+
+
+
+//#moveRect
+   private static void moveRect(RectShape SelectedRectangle){
+
+
+
+
+
+
+
+   }
+
+
+  //tracks user finger in order to move rectangle
+   private void RectangleMoved(MotionEvent event) {
+      // for each of the pointers in the given MotionEvent
+
+      for (int i = 0; i < event.getPointerCount(); i++) {
+
+         Log.i("PRESSURE", event.getSize()+"");
+         // get the pointer ID and pointer index
+         int pointerID = event.getPointerId(i);
+         int pointerIndex = event.findPointerIndex(pointerID);
+
+         // if there is a path associated with the pointer
+         if (pathMap.containsKey(pointerID)) {
+
+            // get the new coordinates for the pointer
+            float newX = event.getX(pointerIndex);
+            float newY = event.getY(pointerIndex);
+
+            // get the path and previous point associated with
+            // this pointer
+            Path path = pathMap.get(pointerID);
+            Point point = previousPointMap.get(pointerID);
+
+            // calculate how far the user moved from the last update
+            float deltaX = Math.abs(newX - point.x);
+            float deltaY = Math.abs(newY - point.y);
+
+            // if the distance is significant enough to matter
+            if (deltaX >= TOUCH_TOLERANCE || deltaY >= TOUCH_TOLERANCE) {
+
+               // move the path to the new location
+               path.quadTo(point.x, point.y, (newX + point.x) / 2,
+                       (newY + point.y) / 2);
+
+               // store the new coordinates
+               point.x = (int) newX;
+               point.y = (int) newY;
+
+
+            }
+         }
+      }
    }
 
    // called when the user drags along the screen

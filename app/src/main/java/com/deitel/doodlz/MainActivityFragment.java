@@ -191,6 +191,15 @@ public class MainActivityFragment extends Fragment {
          case R.id.draw_rectangle:
             DoodleView.rectangle_selected=true;
             return true;
+         case R.id.draw_filled_rectangle:
+            DoodleView.rectangle_selected=true;
+            DoodleView.setToFill();
+            return true;
+         case R.id.draw_filled_oval:
+            DoodleView.oval_selected=true;
+            DoodleView.setToFill();
+            return true;
+
 
       }
 

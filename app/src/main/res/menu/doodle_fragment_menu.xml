@@ -19,7 +19,7 @@
        <menu>
            <item
                android:id="@+id/img1"
-               android:title="African Portrait" />
+               android:title="Lotus" />
            <item
                android:id="@+id/img2"
                android:title="Banksy" />
@@ -53,9 +53,23 @@
                 android:title="@string/draw_rectangle"
                 app:showAsAction="never">
             </item>
+
+            <item
+                android:id="@+id/draw_filled_rectangle"
+                android:title="Draw Filled Rectangle"
+                app:showAsAction="never">
+            </item>
+
+
             <item
                 android:id="@+id/draw_oval"
                 android:title="@string/draw_oval"
+                app:showAsAction="never">
+            </item>
+
+            <item
+                android:id="@+id/draw_filled_oval"
+                android:title="Draw Filled Oval"
                 app:showAsAction="never">
             </item>
 
